@@ -2,6 +2,7 @@
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 
+var childProcess = require('child_process');
 var nodeMinify = require('../lib/node-minify');
 var cli = require('../lib/cli');
 var utils = require('../lib/utils');
@@ -24,6 +25,25 @@ describe('cli', function() {
       output: 'examples/public/js-dist/babili-es6.js'
     }).then(function() {
       expect(spy).toHaveBeenCalled();
+    });
+  });
+});
+
+describe('cli error', function() {
+  beforeEach(function() {
+    spyOn(childProcess, 'spawn').and.throwError('UnsupportedClassVersionError');
+  });
+  test('should minify to throw with all compressors', function() {
+    var spy = jest.spyOn(nodeMinify, 'minify');
+    return cli({
+      compressor: 'all',
+      input: 'examples/public/js/sample.js',
+      output: 'examples/public/js-dist/babili-es6.js'
+    }).catch(function(err) {
+      expect(spy).toHaveBeenCalled();
+      return expect(err.message).toMatch(
+        /(UnsupportedClassVersionError)|(Latest Google Closure Compiler requires Java >= 1.7, please update Java or use gcc-legacy)/
+      );
     });
   });
 });
