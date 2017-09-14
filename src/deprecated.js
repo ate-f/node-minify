@@ -16,17 +16,17 @@ var deprecate = require('depd')('node-minify');
  * Expose `deprecated()`.
  */
 
-export default deprecated;
+export { deprecated };
 
 /**
  * Deprecate some old syntax.
  *
- * @param {String} constructorName
+ * @param {Object} constructor
  * @param {Object} settings
  */
 
-function deprecated(constructorName, settings) {
-  if (constructorName === 'minify') {
+function deprecated(constructor, settings) {
+  if (constructor) {
     deprecate(
       'Instantiate is no longer necessary.\n' +
         'new compressor.minify() is deprecated.\n' +

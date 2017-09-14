@@ -30,7 +30,7 @@ var defaultSettings = {
  * Expose `setup()`.
  */
 
-export default setup;
+export { setup };
 
 /**
  * Run setup.

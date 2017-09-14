@@ -10,15 +10,9 @@
  * Module dependencies.
  */
 
-import deprecated from './deprecated';
-import setup from './setup';
-import compress from './compress';
-
-/**
- * Expose `minify()`.
- */
-
-const app = {};
+import { deprecated } from './deprecated';
+import { setup } from './setup';
+import { compress } from './compress';
 
 /**
  * Run node-minify.
@@ -26,8 +20,8 @@ const app = {};
  * @param {Object} settings - Settings from user input
  */
 
-app.minify = function minify(settings) {
-  deprecated(this.constructor.name, settings);
+function minify(settings) {
+  deprecated(this, settings);
   return new Promise(function(resolve, reject) {
     settings = setup(settings);
     return compress(settings)
@@ -44,6 +38,6 @@ app.minify = function minify(settings) {
         reject(err);
       });
   });
-};
+}
 
-export default app;
+export { minify };

@@ -65,7 +65,7 @@ var compressorsMap = {
  * Expose `compress()`.
  */
 
-export default compress;
+export { compress };
 
 /**
  * Run compressor.
